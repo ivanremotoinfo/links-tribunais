@@ -43,6 +43,13 @@
   .dest-btn.gerid { background: linear-gradient(135deg, #1f1a0a, #18150d); border-color: #cc9922; }
   .dest-btn.gerid:hover { box-shadow: 0 0 20px rgba(204,153,34,0.4); transform: translateY(-2px); }
   .dest-btn.gerid .dt-titulo { color: #ffcc55; }
+  .dest-btn.govbr { background: linear-gradient(135deg, #0a1a2a, #0d1218); border-color: #2266cc; }
+  .dest-btn.govbr:hover { box-shadow: 0 0 20px rgba(34,102,204,0.4); transform: translateY(-2px); }
+  .dest-btn.govbr .dt-titulo { color: #66aaff; }
+  .dest-btn.jusbr { background: linear-gradient(135deg, #1a0a1a, #15101a); border-color: #aa44cc; }
+  .dest-btn.jusbr:hover { box-shadow: 0 0 20px rgba(170,68,204,0.4); transform: translateY(-2px); }
+  .dest-btn.jusbr .dt-titulo { color: #dd99ff; }
+  @media (max-width: 720px) { .destaques[style*="repeat(4"] { grid-template-columns: 1fr 1fr; } }
 
   /* Busca e filtros */
   .filtros { background: #111; border-radius: 10px; border: 1px solid #222; border-left: 3px solid #8B00FF; padding: 16px 18px; margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
@@ -137,12 +144,12 @@
   </div>
 
   <!-- Destaques secundários -->
-  <div class="destaques" style="grid-template-columns: 1fr 1fr;">
+  <div class="destaques" style="grid-template-columns: repeat(4,1fr);">
     <a href="https://seeu.pje.jus.br/seeu/" target="_blank" class="dest-btn seeu">
       <div class="dest-icone">🔒</div>
       <div class="dest-txt">
         <div class="dt-titulo">SEEU</div>
-        <div class="dt-sub">Sistema Eletrônico de Execução Unificado</div>
+        <div class="dt-sub">Execução Unificado</div>
       </div>
     </a>
     <a href="http://atendimento.inss.gov.br/" target="_blank" class="dest-btn gerid">
@@ -150,6 +157,20 @@
       <div class="dest-txt">
         <div class="dt-titulo">GERID</div>
         <div class="dt-sub">Atendimento INSS</div>
+      </div>
+    </a>
+    <a href="https://www.gov.br" target="_blank" class="dest-btn govbr">
+      <div class="dest-icone">🇧🇷</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">gov.br</div>
+        <div class="dt-sub">Conta de acesso único</div>
+      </div>
+    </a>
+    <a href="https://sso.cloud.pje.jus.br/auth/realms/pje/protocol/openid-connect/auth?client_id=jusbr&scope=openid&redirect_uri=https://www.jus.br&response_type=code&state=742ef5b60e64d98ca2b3db599f1fa1c7" target="_blank" class="dest-btn jusbr">
+      <div class="dest-icone">⚖️</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">jus.br</div>
+        <div class="dt-sub">Portal único Judiciário</div>
       </div>
     </a>
   </div>
@@ -339,7 +360,6 @@ const dados = {
     titulo: 'Certificação Digital e Sistemas Externos', icone: '🔐',
     links: [
       { nome:'ITI — Instituto Nacional de Tecnologia da Informação', sigla:'ITI', url:'https://www.gov.br/iti/pt-br' },
-      { nome:'gov.br — Conta de Acesso Único', sigla:'gov.br', url:'https://www.gov.br' },
       { nome:'Receita Federal — Atendimento Virtual (e-CAC)', sigla:'e-CAC', url:'https://www.gov.br/receitafederal/pt-br/assuntos/atendimento/atendimento-virtual-e-cac' },
       { nome:'INSS — Meu INSS', sigla:'Meu INSS', url:'https://meu.inss.gov.br' },
       { nome:'Caixa — Consulta FGTS', sigla:'FGTS', url:'https://www.caixa.gov.br/beneficios-trabalhador/fgts/Paginas/default.aspx' },
