@@ -37,6 +37,12 @@
   .dest-btn.dep .dt-titulo { color: #cc88ff; }
   .dest-btn.fav .dt-titulo { color: #ffcc00; }
   .dest-btn.fav .dt-sub b { color: #ffaa00; }
+  .dest-btn.seeu { background: linear-gradient(135deg, #0a1f2a, #0d1518); border-color: #2299cc; }
+  .dest-btn.seeu:hover { box-shadow: 0 0 20px rgba(34,153,204,0.4); transform: translateY(-2px); }
+  .dest-btn.seeu .dt-titulo { color: #44ccff; }
+  .dest-btn.gerid { background: linear-gradient(135deg, #1f1a0a, #18150d); border-color: #cc9922; }
+  .dest-btn.gerid:hover { box-shadow: 0 0 20px rgba(204,153,34,0.4); transform: translateY(-2px); }
+  .dest-btn.gerid .dt-titulo { color: #ffcc55; }
 
   /* Busca e filtros */
   .filtros { background: #111; border-radius: 10px; border: 1px solid #222; border-left: 3px solid #8B00FF; padding: 16px 18px; margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
@@ -45,8 +51,8 @@
 
   /* Tabs categorias */
   .tabs-cat { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-  .tab-cat { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #333; font-size: 0.74rem; font-weight: 700; cursor: pointer; color: #666; background: #1a1a1a; transition: all 0.15s; white-space: nowrap; }
-  .tab-cat:hover { border-color: #555; color: #999; }
+  .tab-cat { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #444; font-size: 0.74rem; font-weight: 700; cursor: pointer; color: #1a1a1a; background: #ccc; transition: all 0.15s; white-space: nowrap; }
+  .tab-cat:hover { border-color: #008080; background: #e0e0e0; color: #000; }
   .tab-cat.ativo { background: #008080; border-color: #008080; color: #fff; }
 
   /* Seções de categoria */
@@ -126,6 +132,24 @@
       <div class="dest-txt">
         <div class="dt-titulo">Depósitos Judiciais</div>
         <div class="dt-sub">Consulta e guias suporte.adv.br</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Destaques secundários -->
+  <div class="destaques" style="grid-template-columns: 1fr 1fr;">
+    <a href="https://seeu.pje.jus.br/seeu/" target="_blank" class="dest-btn seeu">
+      <div class="dest-icone">🔒</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">SEEU</div>
+        <div class="dt-sub">Sistema Eletrônico de Execução Unificado</div>
+      </div>
+    </a>
+    <a href="http://atendimento.inss.gov.br/" target="_blank" class="dest-btn gerid">
+      <div class="dest-icone">🪪</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">GERID</div>
+        <div class="dt-sub">Atendimento INSS</div>
       </div>
     </a>
   </div>
@@ -322,6 +346,48 @@ const dados = {
       { nome:'SERASA — Consulta CPF/Score', sigla:'Serasa', url:'https://www.serasa.com.br' },
       { nome:'Registro de Imóveis Online (ONR)', sigla:'ONR', url:'https://registrodeimoveis.org.br' },
       { nome:'CENSEC — Central de Testamentos/Procurações', sigla:'CENSEC', url:'https://www.censec.org.br' },
+    ]
+  },
+  outros_sistemas: {
+    titulo: 'Ministério Público e Outros Sistemas', icone: '🧩',
+    links: [
+      { nome:'MPF — Ministério Público Federal', sigla:'MPF', url:'https://www.mpf.mp.br' },
+      { nome:'MPT — Ministério Público do Trabalho (Nacional)', sigla:'MPT', url:'https://www.mpt.mp.br' },
+      { nome:'PRT 1ª Região — RJ', sigla:'PRT1', url:'https://prt1.mpt.mp.br' },
+      { nome:'PRT 2ª Região — SP (Capital)', sigla:'PRT2', url:'https://prt2.mpt.mp.br' },
+      { nome:'PRT 3ª Região — MG', sigla:'PRT3', url:'https://prt3.mpt.mp.br' },
+      { nome:'PRT 4ª Região — RS', sigla:'PRT4', url:'https://prt4.mpt.mp.br' },
+      { nome:'PRT 5ª Região — BA', sigla:'PRT5', url:'https://prt5.mpt.mp.br' },
+      { nome:'PRT 6ª Região — PE', sigla:'PRT6', url:'https://prt6.mpt.mp.br' },
+      { nome:'PRT 7ª Região — CE', sigla:'PRT7', url:'https://prt7.mpt.mp.br' },
+      { nome:'PRT 8ª Região — PA/AP', sigla:'PRT8', url:'https://prt8.mpt.mp.br' },
+      { nome:'PRT 9ª Região — PR', sigla:'PRT9', url:'https://prt9.mpt.mp.br' },
+      { nome:'PRT 10ª Região — DF/TO', sigla:'PRT10', url:'https://prt10.mpt.mp.br' },
+      { nome:'PRT 11ª Região — AM/RR', sigla:'PRT11', url:'https://prt11.mpt.mp.br' },
+      { nome:'PRT 12ª Região — SC', sigla:'PRT12', url:'https://prt12.mpt.mp.br' },
+      { nome:'PRT 13ª Região — PB', sigla:'PRT13', url:'https://prt13.mpt.mp.br' },
+      { nome:'PRT 14ª Região — RO/AC', sigla:'PRT14', url:'https://prt14.mpt.mp.br' },
+      { nome:'PRT 15ª Região — Campinas/SP', sigla:'PRT15', url:'https://prt15.mpt.mp.br' },
+      { nome:'PRT 16ª Região — MA', sigla:'PRT16', url:'https://prt16.mpt.mp.br' },
+      { nome:'PRT 17ª Região — ES', sigla:'PRT17', url:'https://prt17.mpt.mp.br' },
+      { nome:'PRT 18ª Região — GO', sigla:'PRT18', url:'https://prt18.mpt.mp.br' },
+      { nome:'PRT 19ª Região — AL', sigla:'PRT19', url:'https://prt19.mpt.mp.br' },
+      { nome:'PRT 20ª Região — SE', sigla:'PRT20', url:'https://prt20.mpt.mp.br' },
+      { nome:'PRT 21ª Região — RN', sigla:'PRT21', url:'https://prt21.mpt.mp.br' },
+      { nome:'PRT 22ª Região — PI', sigla:'PRT22', url:'https://prt22.mpt.mp.br' },
+      { nome:'PRT 23ª Região — MT', sigla:'PRT23', url:'https://prt23.mpt.mp.br' },
+      { nome:'PRT 24ª Região — MS', sigla:'PRT24', url:'https://prt24.mpt.mp.br' },
+      { nome:'jus.br — Portal Único de Acesso do Judiciário', sigla:'jus.br', url:'https://sso.cloud.pje.jus.br/auth/realms/pje/protocol/openid-connect/auth?client_id=jusbr&scope=openid&redirect_uri=https://www.jus.br&response_type=code&state=742ef5b60e64d98ca2b3db599f1fa1c7' },
+      { nome:'Domicílio Judicial Eletrônico (PDPJ)', sigla:'DJE', url:'https://sso.cloud.pje.jus.br/auth/realms/pje/protocol/openid-connect/auth?client_id=domicilio-eletronico-frontend&redirect_uri=https%3A%2F%2Fdomicilio-eletronico.pdpj.jus.br%2F&state=432c4b08-b6cd-4f49-8769-dd760aa91476&response_mode=fragment&response_type=code&scope=openid&nonce=b29b4f7b-1610-4db3-8905-c9cbaa48ba96' },
+      { nome:'PJe Navegador / Wiki PJe (downloads e tutoriais)', sigla:'PJe Navegador', url:'https://www.pje.jus.br/wiki/index.php/Página_principal' },
+      { nome:'PJe COR — Corregedoria PJe', sigla:'PJe COR', url:'https://corregedoria.pje.jus.br/login.seam' },
+      { nome:'PJe Mídias', sigla:'PJe Mídias', url:'https://midias.pje.jus.br/midias/web/site/login' },
+      { nome:'e-Doc — Sistema Eletrônico do TST', sigla:'e-DOC', url:'https://edoc.tst.jus.br' },
+      { nome:'SEI — Sistema Eletrônico de Informações (gov.br)', sigla:'SEI', url:'https://www.gov.br/governodigital/pt-br/sei' },
+      { nome:'Conectividade Social — Caixa (FGTS empregador)', sigla:'Conectividade Social', url:'https://conectividade.caixa.gov.br/portal/' },
+      { nome:'eSocial — Portal Nacional', sigla:'eSocial', url:'https://www.esocial.gov.br' },
+      { nome:'SEFAZ — Portal Nacional (CONFAZ)', sigla:'SEFAZ', url:'https://www.confaz.fazenda.gov.br' },
+      { nome:'NFS-e Goiânia — Nota Fiscal de Serviço Eletrônica', sigla:'NFS-e Goiânia', url:'https://www.goiania.go.gov.br/portal/servico-cidadao/nota-fiscal-eletronica' },
     ]
   },
   conselhos: {
