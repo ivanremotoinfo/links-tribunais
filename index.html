@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Links dos Tribunais | SuporteADV</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #0d0d0d; color: #e0e0e0; padding: 24px 16px; }
+  .container { max-width: 980px; margin: 0 auto; }
+
+  .header { text-align: center; margin-bottom: 22px; padding-bottom: 20px; border-bottom: 1px solid #222; }
+  h1 { font-size: 1.5rem; color: #008080; margin-bottom: 6px; }
+  .subtitle { font-size: 0.88rem; color: #888; line-height: 1.5; }
+  .brand { font-size: 0.78rem; margin-top: 8px; color: #555; }
+  .brand span.s { color: #8B00FF; font-weight: 700; }
+  .brand span.a { color: #008080; font-weight: 700; }
+
+  /* Botões destacados topo */
+  .destaques { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 720px) { .destaques { grid-template-columns: 1fr; } }
+  .dest-btn {
+    display: flex; align-items: center; gap: 14px; padding: 20px 22px; border-radius: 12px;
+    text-decoration: none; transition: all 0.2s; border: 2px solid transparent; cursor: pointer;
+  }
+  .dest-btn.bv { background: linear-gradient(135deg, #0a2a2a, #0d1a1a); border-color: #008080; }
+  .dest-btn.bv:hover { box-shadow: 0 0 20px rgba(0,128,128,0.4); transform: translateY(-2px); }
+  .dest-btn.dep { background: linear-gradient(135deg, #1a0a2a, #140d1a); border-color: #8B00FF; }
+  .dest-btn.dep:hover { box-shadow: 0 0 20px rgba(139,0,255,0.4); transform: translateY(-2px); }
+  .dest-btn.fav { background: linear-gradient(135deg, #2a1f0a, #1a160d); border-color: #ffaa00; }
+  .dest-btn.fav:hover { box-shadow: 0 0 20px rgba(255,170,0,0.4); transform: translateY(-2px); }
+  .dest-btn.fav.ativo { border-color: #ffcc00; box-shadow: 0 0 14px rgba(255,170,0,0.35); }
+  .dest-icone { font-size: 2.6rem; flex-shrink: 0; }
+  .dest-txt .dt-titulo { font-size: 1.25rem; font-weight: 800; color: #fff; }
+  .dest-txt .dt-sub { font-size: 0.85rem; color: #999; margin-top: 3px; }
+  .dest-btn.bv .dt-titulo { color: #00ffff; }
+  .dest-btn.dep .dt-titulo { color: #cc88ff; }
+  .dest-btn.fav .dt-titulo { color: #ffcc00; }
+  .dest-btn.fav .dt-sub b { color: #ffaa00; }
+
+  /* Busca e filtros */
+  .filtros { background: #111; border-radius: 10px; border: 1px solid #222; border-left: 3px solid #8B00FF; padding: 16px 18px; margin-bottom: 14px; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .filtros input { flex: 1; min-width: 180px; padding: 10px 14px; border: 1.5px solid #333; border-radius: 8px; font-size: 0.95rem; color: #fff; background: #1a1a1a; }
+  .filtros input:focus { outline: none; border-color: #008080; box-shadow: 0 0 0 2px rgba(0,128,128,0.2); }
+
+  /* Tabs categorias */
+  .tabs-cat { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .tab-cat { padding: 7px 14px; border-radius: 20px; border: 1.5px solid #333; font-size: 0.74rem; font-weight: 700; cursor: pointer; color: #666; background: #1a1a1a; transition: all 0.15s; white-space: nowrap; }
+  .tab-cat:hover { border-color: #555; color: #999; }
+  .tab-cat.ativo { background: #008080; border-color: #008080; color: #fff; }
+
+  /* Seções de categoria */
+  .categoria { margin-bottom: 22px; }
+  .categoria-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #1a1a1a; }
+  .categoria-icone { font-size: 1.3rem; }
+  .categoria-titulo { font-size: 0.95rem; font-weight: 700; color: #008080; text-transform: uppercase; letter-spacing: 0.05em; }
+  .categoria-count { font-size: 0.72rem; color: #444; }
+
+  /* Grid de links */
+  .links-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
+
+  .link-card {
+    display: flex; align-items: center; gap: 10px; background: #111; border: 1.5px solid #1a1a1a;
+    border-radius: 8px; padding: 10px 12px; text-decoration: none; transition: all 0.15s; position: relative;
+  }
+  .link-card:hover { border-color: #008080; background: #0e1414; transform: translateX(2px); }
+  .link-card.favorito { border-color: #3a2a05; background: #1a1505; }
+  .link-card.favorito:hover { border-color: #ffaa00; }
+
+  .link-info { flex: 1; min-width: 0; }
+  .link-nome { font-size: 0.85rem; font-weight: 600; color: #ccc; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .link-card:hover .link-nome { color: #00ffff; }
+  .link-sigla { font-size: 0.68rem; color: #555; margin-top: 1px; }
+
+  .star-btn {
+    font-size: 2.3rem; line-height: 1; flex-shrink: 0; cursor: pointer; transition: all 0.15s;
+    color: #333; padding: 2px 6px; user-select: none;
+  }
+  .star-btn:hover { color: #ffcc00; transform: scale(1.2); }
+  .star-btn.ativa { color: #ffaa00; }
+  .star-btn.ativa:hover { color: #ffcc00; }
+
+  .link-arrow { font-size: 0.85rem; color: #333; flex-shrink: 0; }
+  .link-card:hover .link-arrow { color: #008080; }
+
+  /* Sem favoritos */
+  .sem-favs { text-align: center; padding: 50px 20px; color: #444; }
+  .sem-favs .sf-icone { font-size: 3rem; margin-bottom: 10px; }
+  .sem-favs .sf-txt { font-size: 0.92rem; }
+  .sem-favs .sf-sub { font-size: 0.78rem; margin-top: 6px; color: #333; }
+
+  /* Sem resultados */
+  .sem-result { text-align: center; padding: 40px; color: #444; font-size: 0.88rem; display: none; }
+
+  .aviso { font-size: 0.72rem; color: #444; margin-top: 18px; line-height: 1.6; text-align: center; }
+  .aviso b { color: #666; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="header">
+    <h1>Links dos Tribunais e Sistemas Judiciais</h1>
+    <p class="subtitle">Acesso rápido a todos os tribunais, sistemas processuais (PJe, e-SAJ, Projudi, eProc) e ferramentas auxiliares do Brasil. Clique na ⭐ para favoritar os mais usados.</p>
+    <p class="brand"><span class="s">suporte</span><span class="a">ADV</span>.br — Ferramentas para Advogados</p>
+  </div>
+
+  <!-- Botões destacados -->
+  <div class="destaques">
+    <div class="dest-btn fav" id="filtro-favs" onclick="toggleSoFavoritos()">
+      <div class="dest-icone">⭐</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">Favoritos</div>
+        <div class="dt-sub"><b id="num-favs">0</b> link(s) salvos</div>
+      </div>
+    </div>
+    <a href="https://www.suporte.adv.br/bv" target="_blank" class="dest-btn bv">
+      <div class="dest-icone">🖥️</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">Balcão Virtual</div>
+        <div class="dt-sub">Atendimento remoto suporte.adv.br</div>
+      </div>
+    </a>
+    <a href="https://www.suporte.adv.br/depositos" target="_blank" class="dest-btn dep">
+      <div class="dest-icone">💰</div>
+      <div class="dest-txt">
+        <div class="dt-titulo">Depósitos Judiciais</div>
+        <div class="dt-sub">Consulta e guias suporte.adv.br</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Busca -->
+  <div class="filtros">
+    <input type="text" id="busca" placeholder="🔍 Buscar tribunal, sigla ou sistema (ex: TJBA, PJe, STF...)" oninput="render()">
+  </div>
+
+  <!-- Tabs de categoria -->
+  <div class="tabs-cat" id="tabs-cat"></div>
+
+  <div id="categorias-container"></div>
+  <div class="sem-result" id="sem-result">Nenhum link encontrado para esta busca.</div>
+
+  <p class="aviso">⚠️ <b>Importante:</b> os links direcionam para sites oficiais externos (Poder Judiciário, CNJ, tribunais). O suporte.adv.br não armazena nem solicita senhas de acesso a esses sistemas — toda autenticação é feita diretamente no site oficial do tribunal. Favoritos são salvos no seu navegador (não são compartilhados entre dispositivos).</p>
+
+</div>
+
+<script>
+const dados = {
+  superiores: {
+    titulo: 'Tribunais Superiores', icone: '🏛️',
+    links: [
+      { nome:'STF — Supremo Tribunal Federal', sigla:'STF', url:'https://portal.stf.jus.br' },
+      { nome:'STJ — Superior Tribunal de Justiça', sigla:'STJ', url:'https://www.stj.jus.br' },
+      { nome:'TST — Tribunal Superior do Trabalho', sigla:'TST', url:'https://www.tst.jus.br' },
+      { nome:'TSE — Tribunal Superior Eleitoral', sigla:'TSE', url:'https://www.tse.jus.br' },
+      { nome:'STM — Superior Tribunal Militar', sigla:'STM', url:'https://www.stm.jus.br' },
+      { nome:'CNJ — Conselho Nacional de Justiça', sigla:'CNJ', url:'https://www.cnj.jus.br' },
+      { nome:'CJF — Conselho da Justiça Federal', sigla:'CJF', url:'https://www.cjf.jus.br' },
+      { nome:'CSJT — Conselho Superior da Justiça do Trabalho', sigla:'CSJT', url:'https://www.csjt.jus.br' },
+      { nome:'PJe — Processo Judicial Eletrônico (Portal Nacional)', sigla:'PJe', url:'https://www.pje.jus.br' },
+      { nome:'Justiça em Números (CNJ)', sigla:'CNJ', url:'https://www.cnj.jus.br/pesquisas-judiciarias/justica-em-numeros/' },
+      { nome:'DataJud (Base Nacional de Dados do Judiciário)', sigla:'CNJ', url:'https://www.cnj.jus.br/sistemas/datajud/' },
+    ]
+  },
+  trf: {
+    titulo: 'Tribunais Regionais Federais (TRF)', icone: '⚖️',
+    links: [
+      { nome:'TRF1 — 1ª Região (DF, GO, MT, TO, AC, AM, AP, MA, PA, RO, RR, BA, MG, PI)', sigla:'TRF1', url:'https://www.trf1.jus.br' },
+      { nome:'TRF2 — 2ª Região (RJ, ES)', sigla:'TRF2', url:'https://www.trf2.jus.br' },
+      { nome:'TRF3 — 3ª Região (SP, MS)', sigla:'TRF3', url:'https://www.trf3.jus.br' },
+      { nome:'TRF4 — 4ª Região (RS, SC, PR)', sigla:'TRF4', url:'https://www.trf4.jus.br' },
+      { nome:'TRF5 — 5ª Região (PE, AL, CE, PB, RN, SE)', sigla:'TRF5', url:'https://www.trf5.jus.br' },
+      { nome:'TRF6 — 6ª Região (MG)', sigla:'TRF6', url:'https://www.trf6.jus.br' },
+      { nome:'PJe — Processo Eletrônico da Justiça Federal', sigla:'PJe-JF', url:'https://pje.jf.jus.br/pje/login.seam' },
+      { nome:'JEF — Juizados Especiais Federais (acesso via TRF)', sigla:'JEF', url:'https://www.cjf.jus.br/cjf/programas-e-acoes/juizados-especiais' },
+    ]
+  },
+  tj_ne: {
+    titulo: 'Tribunais de Justiça — Nordeste', icone: '🏢',
+    links: [
+      { nome:'TJBA — Bahia', sigla:'TJBA', url:'https://www.tjba.jus.br' },
+      { nome:'TJBA — PJe (1º grau)', sigla:'PJe-BA', url:'https://pje.tjba.jus.br/pje/login.seam' },
+      { nome:'TJBA — eSAJ (precatórios/consultas)', sigla:'eSAJ-BA', url:'https://esaj.tjba.jus.br/esaj/portal.do?servico=190090' },
+      { nome:'TJPE — Pernambuco', sigla:'TJPE', url:'https://www.tjpe.jus.br' },
+      { nome:'TJPE — PJe', sigla:'PJe-PE', url:'https://pje.tjpe.jus.br/1g/login.seam' },
+      { nome:'TJCE — Ceará', sigla:'TJCE', url:'https://www.tjce.jus.br' },
+      { nome:'TJCE — eSAJ', sigla:'eSAJ-CE', url:'https://esaj.tjce.jus.br/esaj/portal.do?servico=190090' },
+      { nome:'TJMA — Maranhão', sigla:'TJMA', url:'https://www.tjma.jus.br' },
+      { nome:'TJMA — PJe', sigla:'PJe-MA', url:'https://pje.tjma.jus.br/pje/login.seam' },
+      { nome:'TJAL — Alagoas', sigla:'TJAL', url:'https://www.tjal.jus.br' },
+      { nome:'TJAL — PJe', sigla:'PJe-AL', url:'https://pje.tjal.jus.br/pje1g/login.seam' },
+      { nome:'TJSE — Sergipe', sigla:'TJSE', url:'https://www.tjse.jus.br' },
+      { nome:'TJSE — PJe', sigla:'PJe-SE', url:'https://pje.tjse.jus.br/pje1g/login.seam' },
+      { nome:'TJPB — Paraíba', sigla:'TJPB', url:'https://www.tjpb.jus.br' },
+      { nome:'TJPB — PJe', sigla:'PJe-PB', url:'https://pje.tjpb.jus.br/pje/login.seam' },
+      { nome:'TJRN — Rio Grande do Norte', sigla:'TJRN', url:'https://www.tjrn.jus.br' },
+      { nome:'TJRN — PJe', sigla:'PJe-RN', url:'https://pje.tjrn.jus.br/pje/login.seam' },
+      { nome:'TJPI — Piauí', sigla:'TJPI', url:'https://www.tjpi.jus.br' },
+      { nome:'TJPI — PJe', sigla:'PJe-PI', url:'https://pje.tjpi.jus.br/1g/login.seam' },
+    ]
+  },
+  tj_se: {
+    titulo: 'Tribunais de Justiça — Sudeste', icone: '🏢',
+    links: [
+      { nome:'TJSP — São Paulo', sigla:'TJSP', url:'https://www.tjsp.jus.br' },
+      { nome:'TJSP — eSAJ', sigla:'eSAJ-SP', url:'https://esaj.tjsp.jus.br/esaj/portal.do?servico=190090' },
+      { nome:'TJRJ — Rio de Janeiro', sigla:'TJRJ', url:'https://www.tjrj.jus.br' },
+      { nome:'TJRJ — PJe', sigla:'PJe-RJ', url:'https://pje.tjrj.jus.br/1g/login.seam' },
+      { nome:'TJMG — Minas Gerais', sigla:'TJMG', url:'https://www.tjmg.jus.br' },
+      { nome:'TJMG — PJe', sigla:'PJe-MG', url:'https://pje.tjmg.jus.br/pje/login.seam' },
+      { nome:'TJES — Espírito Santo', sigla:'TJES', url:'https://www.tjes.jus.br' },
+      { nome:'TJES — PJe', sigla:'PJe-ES', url:'https://pje.tjes.jus.br/pje/login.seam' },
+    ]
+  },
+  tj_s: {
+    titulo: 'Tribunais de Justiça — Sul', icone: '🏢',
+    links: [
+      { nome:'TJRS — Rio Grande do Sul', sigla:'TJRS', url:'https://www.tjrs.jus.br' },
+      { nome:'TJRS — eProc', sigla:'eProc-RS', url:'https://eproc1g.tjrs.jus.br/eproc/' },
+      { nome:'TJPR — Paraná', sigla:'TJPR', url:'https://www.tjpr.jus.br' },
+      { nome:'TJPR — Projudi', sigla:'Projudi-PR', url:'https://projudi.tjpr.jus.br/projudi/' },
+      { nome:'TJPR — PJe', sigla:'PJe-PR', url:'https://pje.tjpr.jus.br/1g/login.seam' },
+      { nome:'TJSC — Santa Catarina', sigla:'TJSC', url:'https://www.tjsc.jus.br' },
+      { nome:'TJSC — eProc', sigla:'eProc-SC', url:'https://eproc1g.tjsc.jus.br/eproc/' },
+    ]
+  },
+  tj_co: {
+    titulo: 'Tribunais de Justiça — Centro-Oeste', icone: '🏢',
+    links: [
+      { nome:'TJDFT — Distrito Federal e Territórios', sigla:'TJDFT', url:'https://www.tjdft.jus.br' },
+      { nome:'TJDFT — PJe', sigla:'PJe-DFT', url:'https://pje.tjdft.jus.br/pje/login.seam' },
+      { nome:'TJGO — Goiás', sigla:'TJGO', url:'https://www.tjgo.jus.br' },
+      { nome:'TJGO — Projudi', sigla:'Projudi-GO', url:'https://projudi.tjgo.jus.br/' },
+      { nome:'TJGO — PJe', sigla:'PJe-GO', url:'https://pje.tjgo.jus.br/pje/login.seam' },
+      { nome:'TJMT — Mato Grosso', sigla:'TJMT', url:'https://www.tjmt.jus.br' },
+      { nome:'TJMT — PJe', sigla:'PJe-MT', url:'https://pje.tjmt.jus.br/pje/login.seam' },
+      { nome:'TJMS — Mato Grosso do Sul', sigla:'TJMS', url:'https://www.tjms.jus.br' },
+      { nome:'TJMS — eSAJ', sigla:'eSAJ-MS', url:'https://esaj.tjms.jus.br/esaj/portal.do?servico=190090' },
+    ]
+  },
+  tj_n: {
+    titulo: 'Tribunais de Justiça — Norte', icone: '🏢',
+    links: [
+      { nome:'TJAM — Amazonas', sigla:'TJAM', url:'https://www.tjam.jus.br' },
+      { nome:'TJAM — PJe', sigla:'PJe-AM', url:'https://pje.tjam.jus.br/pje/login.seam' },
+      { nome:'TJPA — Pará', sigla:'TJPA', url:'https://www.tjpa.jus.br' },
+      { nome:'TJPA — PJe', sigla:'PJe-PA', url:'https://pje.tjpa.jus.br/pje/login.seam' },
+      { nome:'TJRO — Rondônia', sigla:'TJRO', url:'https://www.tjro.jus.br' },
+      { nome:'TJRO — PJe', sigla:'PJe-RO', url:'https://pje.tjro.jus.br/pje/login.seam' },
+      { nome:'TJAC — Acre', sigla:'TJAC', url:'https://www.tjac.jus.br' },
+      { nome:'TJAC — PJe', sigla:'PJe-AC', url:'https://pje.tjac.jus.br/pje1g/login.seam' },
+      { nome:'TJTO — Tocantins', sigla:'TJTO', url:'https://www.tjto.jus.br' },
+      { nome:'TJTO — eProc', sigla:'eProc-TO', url:'https://eproc1.tjto.jus.br/eprocV2_prod_1grau/' },
+      { nome:'TJRR — Roraima', sigla:'TJRR', url:'https://www.tjrr.jus.br' },
+      { nome:'TJRR — PJe', sigla:'PJe-RR', url:'https://pje.tjrr.jus.br/1g/login.seam' },
+      { nome:'TJAP — Amapá', sigla:'TJAP', url:'https://www.tjap.jus.br' },
+      { nome:'TJAP — PJe', sigla:'PJe-AP', url:'https://pje.tjap.jus.br/1g/login.seam' },
+    ]
+  },
+  trabalhista: {
+    titulo: 'Justiça do Trabalho — TRTs', icone: '👷',
+    links: [
+      { nome:'TRT1 — RJ', sigla:'TRT1', url:'https://www.trt1.jus.br' },
+      { nome:'TRT2 — SP (Capital/Grande SP)', sigla:'TRT2', url:'https://www.trtsp.jus.br' },
+      { nome:'TRT3 — MG', sigla:'TRT3', url:'https://www.trt3.jus.br' },
+      { nome:'TRT4 — RS', sigla:'TRT4', url:'https://www.trt4.jus.br' },
+      { nome:'TRT5 — BA', sigla:'TRT5', url:'https://www.trt5.jus.br' },
+      { nome:'TRT6 — PE', sigla:'TRT6', url:'https://www.trt6.jus.br' },
+      { nome:'TRT7 — CE', sigla:'TRT7', url:'https://www.trt7.jus.br' },
+      { nome:'TRT8 — PA/AP', sigla:'TRT8', url:'https://www.trt8.jus.br' },
+      { nome:'TRT9 — PR', sigla:'TRT9', url:'https://www.trt9.jus.br' },
+      { nome:'TRT10 — DF/TO', sigla:'TRT10', url:'https://www.trt10.jus.br' },
+      { nome:'TRT11 — AM/RR', sigla:'TRT11', url:'https://www.trt11.jus.br' },
+      { nome:'TRT12 — SC', sigla:'TRT12', url:'https://www.trt12.jus.br' },
+      { nome:'TRT13 — PB', sigla:'TRT13', url:'https://www.trt13.jus.br' },
+      { nome:'TRT14 — RO/AC', sigla:'TRT14', url:'https://www.trt14.jus.br' },
+      { nome:'TRT15 — Campinas/SP (interior)', sigla:'TRT15', url:'https://www.trt15.jus.br' },
+      { nome:'TRT16 — MA', sigla:'TRT16', url:'https://www.trt16.jus.br' },
+      { nome:'TRT17 — ES', sigla:'TRT17', url:'https://www.trt17.jus.br' },
+      { nome:'TRT18 — GO', sigla:'TRT18', url:'https://www.trt18.jus.br' },
+      { nome:'TRT19 — AL', sigla:'TRT19', url:'https://www.trt19.jus.br' },
+      { nome:'TRT20 — SE', sigla:'TRT20', url:'https://www.trt20.jus.br' },
+      { nome:'TRT21 — RN', sigla:'TRT21', url:'https://www.trt21.jus.br' },
+      { nome:'TRT22 — PI', sigla:'TRT22', url:'https://www.trt22.jus.br' },
+      { nome:'TRT23 — MT', sigla:'TRT23', url:'https://www.trt23.jus.br' },
+      { nome:'TRT24 — MS', sigla:'TRT24', url:'https://www.trt24.jus.br' },
+      { nome:'PJe — Processo Eletrônico da Justiça do Trabalho (Portal)', sigla:'PJe-Trab', url:'https://pje.csjt.jus.br/pjekz/pje/login' },
+    ]
+  },
+  eleitoral: {
+    titulo: 'Justiça Eleitoral — TREs', icone: '🗳️',
+    links: [
+      { nome:'TRE-BA — Bahia', sigla:'TRE-BA', url:'https://www.tre-ba.jus.br' },
+      { nome:'TRE-SP — São Paulo', sigla:'TRE-SP', url:'https://www.tre-sp.jus.br' },
+      { nome:'TRE-RJ — Rio de Janeiro', sigla:'TRE-RJ', url:'https://www.tre-rj.jus.br' },
+      { nome:'TRE-MG — Minas Gerais', sigla:'TRE-MG', url:'https://www.tre-mg.jus.br' },
+      { nome:'PJe Eleitoral (Portal Nacional)', sigla:'PJe-Eleitoral', url:'https://pje.tse.jus.br' },
+      { nome:'Título de Eleitor / Situação Eleitoral', sigla:'TSE', url:'https://www.tse.jus.br/servicos-eleitorais/autoatendimento' },
+    ]
+  },
+  sistemas: {
+    titulo: 'Sistemas Processuais (Acesso Direto)', icone: '💻',
+    links: [
+      { nome:'PJe — Portal de Acesso Único', sigla:'PJe', url:'https://www.pje.jus.br' },
+      { nome:'e-SAJ — Portal de Consultas (TJSP)', sigla:'eSAJ', url:'https://esaj.tjsp.jus.br/esaj/portal.do?servico=190090' },
+      { nome:'Projudi — Acesso Geral', sigla:'Projudi', url:'https://projudi.tjpr.jus.br/projudi/' },
+      { nome:'e-Proc — TRF4 (1º grau)', sigla:'eProc-TRF4', url:'https://eproc.jfrs.jus.br/eprocV2/' },
+      { nome:'SEEU — Sistema Eletrônico de Execução Unificado', sigla:'SEEU', url:'https://seeu.pje.jus.br/seeu/' },
+      { nome:'Processo Judicial Eletrônico — STJ', sigla:'PJe-STJ', url:'https://www.stj.jus.br/sites/portalp/Processos' },
+      { nome:'JusBrasil — Consulta de processos e jurisprudência', sigla:'JusBrasil', url:'https://www.jusbrasil.com.br' },
+    ]
+  },
+  certificacao: {
+    titulo: 'Certificação Digital e Sistemas Externos', icone: '🔐',
+    links: [
+      { nome:'ITI — Instituto Nacional de Tecnologia da Informação', sigla:'ITI', url:'https://www.gov.br/iti/pt-br' },
+      { nome:'gov.br — Conta de Acesso Único', sigla:'gov.br', url:'https://www.gov.br' },
+      { nome:'Receita Federal — Atendimento Virtual (e-CAC)', sigla:'e-CAC', url:'https://www.gov.br/receitafederal/pt-br/assuntos/atendimento/atendimento-virtual-e-cac' },
+      { nome:'INSS — Meu INSS', sigla:'Meu INSS', url:'https://meu.inss.gov.br' },
+      { nome:'Caixa — Consulta FGTS', sigla:'FGTS', url:'https://www.caixa.gov.br/beneficios-trabalhador/fgts/Paginas/default.aspx' },
+      { nome:'SERASA — Consulta CPF/Score', sigla:'Serasa', url:'https://www.serasa.com.br' },
+      { nome:'Registro de Imóveis Online (ONR)', sigla:'ONR', url:'https://registrodeimoveis.org.br' },
+      { nome:'CENSEC — Central de Testamentos/Procurações', sigla:'CENSEC', url:'https://www.censec.org.br' },
+    ]
+  },
+  conselhos: {
+    titulo: 'OAB e Conselhos Profissionais', icone: '🎓',
+    links: [
+      { nome:'OAB Federal — Conselho Federal', sigla:'OAB', url:'https://www.oab.org.br' },
+      { nome:'OAB/BA — Seccional Bahia', sigla:'OAB-BA', url:'https://www.oabba.org.br' },
+      { nome:'OAB/SP — Seccional São Paulo', sigla:'OAB-SP', url:'https://www.oabsp.org.br' },
+      { nome:'OAB/RJ — Seccional Rio de Janeiro', sigla:'OAB-RJ', url:'https://www.oabrj.org.br' },
+      { nome:'OAB/MG — Seccional Minas Gerais', sigla:'OAB-MG', url:'https://oabmg.org.br' },
+      { nome:'CAASP — Caixa de Assistência dos Advogados de SP', sigla:'CAASP', url:'https://www.caasp.org.br' },
+      { nome:'CAOAB — Caixa de Assistência OAB Federal', sigla:'CAOAB', url:'https://www.oab.org.br/Content/pdf/caoab' },
+    ]
+  },
+};
+
+let categoriaAtiva = 'todas';
+let mostrarSoFavoritos = false;
+let favoritos = JSON.parse(localStorage.getItem('tribunais-favoritos') || '[]');
+
+function getLinkId(catKey, idx) { return `${catKey}_${idx}`; }
+function isFavorito(id) { return favoritos.includes(id); }
+
+function toggleFavorito(id, ev) {
+  ev.preventDefault();
+  ev.stopPropagation();
+  const idx = favoritos.indexOf(id);
+  if (idx >= 0) favoritos.splice(idx, 1);
+  else favoritos.push(id);
+  localStorage.setItem('tribunais-favoritos', JSON.stringify(favoritos));
+  render();
+}
+
+function toggleSoFavoritos() {
+  mostrarSoFavoritos = !mostrarSoFavoritos;
+  if (mostrarSoFavoritos) categoriaAtiva = 'todas';
+  document.getElementById('filtro-favs').classList.toggle('ativo', mostrarSoFavoritos);
+  render();
+}
+
+function setCategoria(cat) {
+  categoriaAtiva = cat;
+  render();
+}
+
+function renderTabs() {
+  const tabs = document.getElementById('tabs-cat');
+  tabs.innerHTML = '';
+  const allTab = document.createElement('div');
+  allTab.className = `tab-cat${categoriaAtiva === 'todas' ? ' ativo' : ''}`;
+  allTab.textContent = '🔎 Todas';
+  allTab.onclick = () => setCategoria('todas');
+  tabs.appendChild(allTab);
+
+  Object.entries(dados).forEach(([key, cat]) => {
+    const tab = document.createElement('div');
+    tab.className = `tab-cat${categoriaAtiva === key ? ' ativo' : ''}`;
+    tab.textContent = `${cat.icone} ${cat.titulo}`;
+    tab.onclick = () => setCategoria(key);
+    tabs.appendChild(tab);
+  });
+}
+
+function render() {
+  renderTabs();
+
+  const busca = document.getElementById('busca').value.toLowerCase().trim();
+  const container = document.getElementById('categorias-container');
+  container.innerHTML = '';
+
+  document.getElementById('num-favs').textContent = favoritos.length;
+
+  let totalEncontrados = 0;
+  let categoriasParaMostrar = categoriaAtiva === 'todas' ? Object.keys(dados) : [categoriaAtiva];
+
+  categoriasParaMostrar.forEach(catKey => {
+    const cat = dados[catKey];
+    const linksFiltrados = cat.links
+      .map((link, idx) => ({ ...link, id: getLinkId(catKey, idx) }))
+      .filter(link => {
+        const matchBusca = !busca || link.nome.toLowerCase().includes(busca) || link.sigla.toLowerCase().includes(busca);
+        const matchFav = !mostrarSoFavoritos || isFavorito(link.id);
+        return matchBusca && matchFav;
+      });
+
+    if (linksFiltrados.length === 0) return;
+    totalEncontrados += linksFiltrados.length;
+
+    const div = document.createElement('div');
+    div.className = 'categoria';
+    div.innerHTML = `
+      <div class="categoria-header">
+        <span class="categoria-icone">${cat.icone}</span>
+        <span class="categoria-titulo">${cat.titulo}</span>
+        <span class="categoria-count">${linksFiltrados.length} link${linksFiltrados.length>1?'s':''}</span>
+      </div>
+      <div class="links-grid"></div>`;
+    const grid = div.querySelector('.links-grid');
+
+    linksFiltrados.forEach(link => {
+      const fav = isFavorito(link.id);
+      const a = document.createElement('a');
+      a.href = link.url;
+      a.target = '_blank';
+      a.rel = 'noopener noreferrer';
+      a.className = `link-card${fav ? ' favorito' : ''}`;
+      a.innerHTML = `
+        <span class="star-btn${fav?' ativa':''}" onclick="toggleFavorito('${link.id}', event)" title="${fav?'Remover dos favoritos':'Adicionar aos favoritos'}">${fav?'★':'☆'}</span>
+        <div class="link-info">
+          <div class="link-nome">${link.nome}</div>
+          <div class="link-sigla">${link.sigla}</div>
+        </div>
+        <span class="link-arrow">↗</span>`;
+      grid.appendChild(a);
+    });
+
+    container.appendChild(div);
+  });
+
+  const semResult = document.getElementById('sem-result');
+  if (totalEncontrados === 0) {
+    if (mostrarSoFavoritos && !busca) {
+      semResult.style.display = '';
+      semResult.innerHTML = `<div class="sem-favs"><div class="sf-icone">⭐</div><div class="sf-txt">Você ainda não tem favoritos.</div><div class="sf-sub">Clique na estrela ☆ ao lado de qualquer link para adicioná-lo aqui.</div></div>`;
+    } else {
+      semResult.style.display = '';
+      semResult.innerHTML = 'Nenhum link encontrado para esta busca.';
+    }
+  } else {
+    semResult.style.display = 'none';
+  }
+}
+
+// Init
+render();
+</script>
+</body>
+</html>
